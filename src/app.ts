@@ -5,13 +5,13 @@ import { parse, ParsedPath } from 'path';
 import { createServer, IncomingMessage, Server, ServerResponse } from 'http';
 import DEFAULT_PORT from './consts/defaultPort';
 import Method from './consts/method';
-import UserController from './controllers/userController';
 import CustomError from './errors.ts/CustomError';
-import { INVALID_METHOD_MESSAGE, INVALID_ROUTE_MESSAGE } from './consts/errorsMessages';
+import { INVALID_METHOD_MESSAGE } from './consts/errorsMessages';
+import UsersRouter from './resources/users/UsersRouter';
 
 const server: Server = createServer();
 
-const userController = new UserController();
+const usersRouter = new UsersRouter();
 
 server.on('request', async (req: IncomingMessage, res: ServerResponse) => {
   const url: ParsedPath = req.url ? parse(req.url) : parse('');
@@ -24,20 +24,16 @@ server.on('request', async (req: IncomingMessage, res: ServerResponse) => {
   try {
     switch (method) {
       case Method.GET:
-        if (dir === '/api' && base === 'users') {
-          await userController.getUsers(res);
-        } else if (dir === '/api/users') {
-          await userController.getUser(base, res);
-        } else {
-          throw new CustomError(INVALID_ROUTE_MESSAGE);
-        }
+        await usersRouter.get(dir, base, res);
         break;
       case Method.POST:
-        if (dir === '/api' && base === 'users') {
-          await userController.addUser(req, res);
-        } else {
-          throw new CustomError(INVALID_ROUTE_MESSAGE);
-        }
+        await usersRouter.post(dir, base, req, res);
+        break;
+      case Method.PUT:
+        await usersRouter.put(dir, base, req, res);
+        break;
+      case Method.DELETE:
+        await usersRouter.delete(dir, base, res);
         break;
       default:
         res.statusCode = 404;

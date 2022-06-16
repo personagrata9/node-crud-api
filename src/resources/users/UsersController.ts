@@ -3,15 +3,15 @@ import {
   INVALID_REQUEST_DATA_MESSAGE,
   INVALID_USER_ID_MESSAGE,
   USER_NOT_FOUND_MESSAGE,
-} from '../consts/errorsMessages';
-import CustomError from '../errors.ts/CustomError';
-import InMemorydatabase from '../imdb/imdb';
-import { IUser, UUIDType } from '../models/IUser';
-import getRequestData from '../utils/getRequestData';
-import uuidValidateV4 from '../utils/uuidValidateV4';
-import validateUser from '../utils/validateUser';
+} from '../../consts/errorsMessages';
+import CustomError from '../../errors.ts/CustomError';
+import InMemorydatabase from '../../imdb/imdb';
+import { IUser, UUIDType } from './IUser';
+import getRequestData from '../../utils/getRequestData';
+import uuidValidateV4 from '../../utils/uuidValidateV4';
+import validateUser from '../../utils/validateUser';
 
-export default class UserController {
+export default class UsersController {
   private database: InMemorydatabase;
 
   constructor() {
@@ -25,7 +25,7 @@ export default class UserController {
     res.end(JSON.stringify(users));
   };
 
-  public getUser = async (base: string, res: ServerResponse): Promise<void> => {
+  public getUser = async (base: string, res: ServerResponse, content = true): Promise<void> => {
     const isUUID: boolean = uuidValidateV4(base);
 
     if (!isUUID) {
@@ -39,14 +39,19 @@ export default class UserController {
       if (!searchedUser) {
         res.statusCode = 404;
         throw new CustomError(USER_NOT_FOUND_MESSAGE);
-      } else {
+      } else if (content) {
         res.statusCode = 200;
         res.end(JSON.stringify(searchedUser));
       }
     }
   };
 
-  public addUser = async (req: IncomingMessage, res: ServerResponse): Promise<void> => {
+  public createUser = async (
+    req: IncomingMessage,
+    res: ServerResponse,
+    update = false,
+    userId?: UUIDType
+  ): Promise<void> => {
     const data: string = await getRequestData(req);
     const dataParsed: unknown = JSON.parse(data);
 
@@ -56,7 +61,7 @@ export default class UserController {
       res.statusCode = 400;
       throw new CustomError(INVALID_REQUEST_DATA_MESSAGE);
     } else {
-      const id = await this.database.createUserId();
+      const id = update ? userId : await this.database.createUserId();
       const { username, age, hobbies } = dataParsed as IUser;
 
       const newUser = {
@@ -66,10 +71,29 @@ export default class UserController {
         hobbies,
       };
 
-      await this.database.addUser(newUser);
+      if (update && userId) {
+        await this.database.updateUser(userId, newUser);
+      } else {
+        await this.database.addUser(newUser);
+      }
 
-      res.statusCode = 201;
+      res.statusCode = update ? 200 : 201;
       res.end(JSON.stringify(newUser));
     }
+  };
+
+  public updateUser = async (base: string, req: IncomingMessage, res: ServerResponse) => {
+    await this.getUser(base, res, false);
+
+    const userId: UUIDType = base;
+    await this.createUser(req, res, true, userId);
+  };
+
+  public deleteUser = async (base: string, res: ServerResponse): Promise<void> => {
+    await this.getUser(base, res, false);
+    const userId: UUIDType = base;
+    await this.database.deleteUser(userId);
+    res.statusCode = 204;
+    res.end();
   };
 }

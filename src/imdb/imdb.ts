@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { IUser, UUIDType } from '../models/IUser';
+import { IUser, UUIDType } from '../resources/users/IUser';
 
 export default class InMemorydatabase {
   private users: IUser[];
@@ -30,9 +30,27 @@ export default class InMemorydatabase {
     return this.newUserId;
   };
 
-  public addUser = (user: IUser): Promise<void> =>
+  public addUser = (newUser: IUser): Promise<void> =>
     new Promise((resolve) => {
-      this.users.push(user);
+      this.users.push(newUser);
       resolve();
+    });
+
+  public updateUser = (userId: UUIDType, newUser: IUser): Promise<void> =>
+    new Promise((resolve) => {
+      const userIndex: number = this.users.findIndex((user) => user.id === userId);
+      if (userIndex !== -1) {
+        this.users.splice(userIndex, 1, newUser);
+        resolve();
+      }
+    });
+
+  public deleteUser = (userId: UUIDType): Promise<void> =>
+    new Promise((resolve) => {
+      const userIndex: number = this.users.findIndex((user) => user.id === userId);
+      if (userIndex !== -1) {
+        this.users.splice(userIndex, 1);
+        resolve();
+      }
     });
 }
