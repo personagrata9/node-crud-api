@@ -10,13 +10,18 @@ export default class UsersRouter {
     this.usersController = new UsersController();
   }
 
+  private sendInvalidRouteResponse = (res: ServerResponse) => {
+    res.statusCode = 404;
+    throw new CustomError(INVALID_ROUTE_MESSAGE);
+  };
+
   public get = async (dir: string, base: string, res: ServerResponse): Promise<void> => {
     if (dir === '/api' && base === 'users') {
       await this.usersController.getUsers(res);
     } else if (dir === '/api/users') {
       await this.usersController.getUser(base, res);
     } else {
-      throw new CustomError(INVALID_ROUTE_MESSAGE);
+      this.sendInvalidRouteResponse(res);
     }
   };
 
@@ -24,7 +29,7 @@ export default class UsersRouter {
     if (dir === '/api' && base === 'users') {
       await this.usersController.createUser(req, res);
     } else {
-      throw new CustomError(INVALID_ROUTE_MESSAGE);
+      this.sendInvalidRouteResponse(res);
     }
   };
 
@@ -32,7 +37,7 @@ export default class UsersRouter {
     if (dir === '/api/users') {
       await this.usersController.updateUser(base, req, res);
     } else {
-      throw new CustomError(INVALID_ROUTE_MESSAGE);
+      this.sendInvalidRouteResponse(res);
     }
   };
 
@@ -40,7 +45,7 @@ export default class UsersRouter {
     if (dir === '/api/users') {
       await this.usersController.deleteUser(base, res);
     } else {
-      throw new CustomError(INVALID_ROUTE_MESSAGE);
+      this.sendInvalidRouteResponse(res);
     }
   };
 }

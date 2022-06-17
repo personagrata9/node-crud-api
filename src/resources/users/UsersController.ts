@@ -53,18 +53,18 @@ export default class UsersController {
     userId?: UUIDType
   ): Promise<void> => {
     const data: string = await getRequestData(req);
-    const dataParsed: unknown = JSON.parse(data);
 
-    const isUser = validateUser(dataParsed as Record<string, unknown>);
+    const isUser: boolean = validateUser(data);
 
     if (!isUser) {
       res.statusCode = 400;
       throw new CustomError(INVALID_REQUEST_DATA_MESSAGE);
     } else {
-      const id = update ? userId : await this.database.createUserId();
-      const { username, age, hobbies } = dataParsed as IUser;
+      const dataParsed = JSON.parse(data) as IUser;
+      const id: string | undefined = update ? userId : await this.database.createUserId();
+      const { username, age, hobbies } = dataParsed;
 
-      const newUser = {
+      const newUser: IUser = {
         id,
         username,
         age,

@@ -1,23 +1,23 @@
 import checkAllArrElementsStrings from './checkAllArrElementsStrings';
-import checkIsObject from './checkIsObject';
+import checkIsJSON from './checkIsJSON';
 
-const validateUser = (dataParsed: unknown): boolean => {
-  const isObject: boolean = checkIsObject(dataParsed);
+const validateUser = (data: string): boolean => {
+  const isJSON: boolean = checkIsJSON(data);
 
-  if (!isObject) return false;
+  if (!isJSON) return false;
 
-  const dataObject = dataParsed as Record<string, unknown>;
+  const dataParsed = JSON.parse(data) as Record<string, unknown>;
 
   if (
-    'username' in dataObject &&
-    'age' in dataObject &&
-    'hobbies' in dataObject &&
-    Object.keys(dataObject).length === 3 &&
-    dataObject.username &&
-    typeof dataObject.username === 'string' &&
-    typeof dataObject.age === 'number' &&
-    Array.isArray(dataObject.hobbies) &&
-    checkAllArrElementsStrings(dataObject.hobbies)
+    'username' in dataParsed &&
+    'age' in dataParsed &&
+    'hobbies' in dataParsed &&
+    Object.keys(dataParsed).length === 3 &&
+    dataParsed.username &&
+    typeof dataParsed.username === 'string' &&
+    typeof dataParsed.age === 'number' &&
+    Array.isArray(dataParsed.hobbies) &&
+    checkAllArrElementsStrings(dataParsed.hobbies)
   ) {
     return true;
   }
