@@ -6,6 +6,7 @@
   "scripts": {
     "start:dev": "cross-env nodemon",
     "start:prod": "cross-env tsc && ts-node dist/app.js",
+    "start:multi": "cross-env ts-node src/multi/multi.ts",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix"
   },
