@@ -5,21 +5,17 @@ import {
   USER_NOT_FOUND_MESSAGE,
 } from '../../consts/errorsMessages';
 import CustomError from '../../errors.ts/CustomError';
-import InMemorydatabase from '../../imdb/imdb';
 import { IUser, UUIDType } from './IUser';
 import getRequestData from '../../utils/getRequestData';
 import uuidValidateV4 from '../../utils/uuidValidateV4';
 import validateNewUser from '../../utils/validateNewUser';
+import createDatabase from '../../imdb/imdb';
+
+const db = createDatabase();
 
 export default class UsersController {
-  private database: InMemorydatabase;
-
-  constructor() {
-    this.database = new InMemorydatabase();
-  }
-
   public getUsers = async (res: ServerResponse): Promise<void> => {
-    const users = await this.database.findAllUsers();
+    const users = await db.findAllUsers();
 
     res.statusCode = 200;
     res.end(JSON.stringify(users));
@@ -34,7 +30,7 @@ export default class UsersController {
     } else {
       const userId: UUIDType = base;
 
-      const searchedUser = await this.database.findUserById(userId);
+      const searchedUser = await db.findUserById(userId);
 
       if (!searchedUser) {
         res.statusCode = 404;
@@ -61,7 +57,7 @@ export default class UsersController {
       throw new CustomError(INVALID_REQUEST_DATA_MESSAGE);
     } else {
       const dataParsed = JSON.parse(data) as IUser;
-      const id: string | undefined = update ? userId : await this.database.createUserId();
+      const id: string | undefined = update ? userId : await db.createUserId();
       const { username, age, hobbies } = dataParsed;
 
       const newUser: IUser = {
@@ -72,9 +68,9 @@ export default class UsersController {
       };
 
       if (update && userId) {
-        await this.database.updateUser(userId, newUser);
+        await db.updateUser(userId, newUser);
       } else {
-        await this.database.addUser(newUser);
+        await db.addUser(newUser);
       }
 
       res.statusCode = update ? 200 : 201;
@@ -92,7 +88,7 @@ export default class UsersController {
   public deleteUser = async (base: string, res: ServerResponse): Promise<void> => {
     await this.getUser(base, res, false);
     const userId: UUIDType = base;
-    await this.database.deleteUser(userId);
+    await db.deleteUser(userId);
     res.statusCode = 204;
     res.end();
   };

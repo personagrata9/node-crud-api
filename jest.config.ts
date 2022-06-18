@@ -5,6 +5,7 @@ export default async (): Promise<Config.InitialOptions> => {
     verbose: true,
     testEnvironment: 'node',
     extensionsToTreatAsEsm: ['.ts'],
-    preset: 'ts-jest'
+    preset: 'ts-jest',
+    testPathIgnorePatterns: ['dist']
   };
 };

@@ -6,7 +6,6 @@ import uuidValidateV4 from '../utils/uuidValidateV4';
 
 describe('Scenario 1', () => {
   let userId: UUIDType;
-
   let createdRecord: IUser;
 
   test('Should return no users', async () => {
@@ -47,25 +46,25 @@ describe('Scenario 1', () => {
     expect(JSON.stringify(res.body) === JSON.stringify(createdRecord)).toBeTruthy();
   });
 
-  test('Should get updated user', async () => {
-    const updatedUser: IUser = {
+  test('Should return updated user', async () => {
+    const userToUpdate: IUser = {
       username: 'Jane Doe',
       age: 20,
       hobbies: ['yoga', 'Netflix'],
     };
 
-    const { username, age, hobbies } = updatedUser;
-    const updatedUserWithId = {
+    const { username, age, hobbies } = userToUpdate;
+    const userToUpdateWithId = {
       id: userId,
       username,
       age,
       hobbies,
     };
 
-    const res = await request(server).put(`/api/users/${userId}`).send(JSON.stringify(updatedUser));
+    const res = await request(server).put(`/api/users/${userId}`).send(JSON.stringify(userToUpdate));
 
     expect(res.statusCode).toBe(200);
-    expect(JSON.stringify(res.body) === JSON.stringify(updatedUserWithId)).toBeTruthy();
+    expect(JSON.stringify(res.body) === JSON.stringify(userToUpdateWithId)).toBeTruthy();
   });
 
   test('Should delete user', async () => {
