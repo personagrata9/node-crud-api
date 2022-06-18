@@ -1,9 +1,6 @@
 import cluster from 'cluster';
 import { cpus, EOL } from 'os';
-import UsersRouter from '../resources/users/UsersRouter';
-import createHttpServer from '../server/createServer';
-
-const usersRouter = new UsersRouter();
+import { server, port } from '../server';
 
 (() => {
   if (cluster.isPrimary) {
@@ -15,7 +12,6 @@ const usersRouter = new UsersRouter();
       if (pid) process.stdout.write(`Worker with id ${pid} has been forked${EOL}`);
     });
   } else {
-    const workerId = process.pid;
-    createHttpServer(usersRouter, workerId);
+    server.listen(port);
   }
 })();

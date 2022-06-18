@@ -1,7 +1,7 @@
 import checkAllArrElementsStrings from './checkAllArrElementsStrings';
 import checkIsJSON from './checkIsJSON';
 
-const validateUser = (data: string): boolean => {
+const validateNewUser = (data: string): boolean => {
   const isJSON: boolean = checkIsJSON(data);
 
   if (!isJSON) return false;
@@ -24,4 +24,4 @@ const validateUser = (data: string): boolean => {
   return false;
 };
 
-export default validateUser;
+export default validateNewUser;

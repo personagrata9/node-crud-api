@@ -9,7 +9,7 @@ import InMemorydatabase from '../../imdb/imdb';
 import { IUser, UUIDType } from './IUser';
 import getRequestData from '../../utils/getRequestData';
 import uuidValidateV4 from '../../utils/uuidValidateV4';
-import validateUser from '../../utils/validateUser';
+import validateNewUser from '../../utils/validateNewUser';
 
 export default class UsersController {
   private database: InMemorydatabase;
@@ -54,7 +54,7 @@ export default class UsersController {
   ): Promise<void> => {
     const data: string = await getRequestData(req);
 
-    const isUser: boolean = validateUser(data);
+    const isUser: boolean = validateNewUser(data);
 
     if (!isUser) {
       res.statusCode = 400;

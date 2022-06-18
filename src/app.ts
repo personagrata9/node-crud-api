@@ -1,6 +1,3 @@
-import UsersRouter from './resources/users/UsersRouter';
-import createHttpServer from './server/createServer';
+import { server, port } from './server';
 
-const usersRouter = new UsersRouter();
-
-createHttpServer(usersRouter);
+server.listen(port);

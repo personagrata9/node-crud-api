@@ -27,7 +27,6 @@
   ],
   "env": {
     "es6": true,
-    "browser": true,
     "node": true
   },
   "rules": {
@@ -35,5 +34,6 @@
     "class-methods-use-this": "off",
     "@typescript-eslint/no-explicit-any": 2,
     "prettier/prettier": "error"
-  }
+  },
+  "ignorePatterns": ["jest.config.ts"]
 }
