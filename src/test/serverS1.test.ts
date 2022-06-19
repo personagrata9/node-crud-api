@@ -1,7 +1,7 @@
 import request from 'supertest';
 import { USER_NOT_FOUND_MESSAGE } from '../consts/errorsMessages';
 import { IUser, UUIDType } from '../resources/users/IUser';
-import { server } from '../server';
+import server from '../server';
 import uuidValidateV4 from '../utils/uuidValidateV4';
 
 describe('Scenario 1', () => {

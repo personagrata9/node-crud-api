@@ -3,15 +3,14 @@ import 'dotenv/config';
 import { EOL } from 'os';
 import { parse, ParsedPath } from 'path';
 import { createServer, IncomingMessage, Server, ServerResponse } from 'http';
-import DEFAULT_PORT from './consts/defaultPort';
 import { INVALID_METHOD_MESSAGE } from './consts/errorsMessages';
 import Method from './consts/method';
 import CustomError from './errors.ts/CustomError';
 import UsersRouter from './resources/users/UsersRouter';
 
-export const port: string = process.env.PORT || DEFAULT_PORT;
+const { PORT } = process.env;
 
-export const server: Server = createServer();
+const server: Server = createServer();
 
 const usersRouter = new UsersRouter();
 
@@ -61,5 +60,7 @@ server.on('request', async (req: IncomingMessage, res: ServerResponse) => {
 });
 
 server.on('listening', () => {
-  process.stdout.write(`pid ${pid}: SERVER IS RUNNING ON PORT ${port}${EOL}`);
+  if (PORT) process.stdout.write(`pid ${pid}: SERVER IS RUNNING ON PORT ${PORT}${EOL}`);
 });
+
+export default server;

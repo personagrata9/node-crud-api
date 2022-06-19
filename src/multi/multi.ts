@@ -1,6 +1,8 @@
 import cluster from 'cluster';
 import { cpus, EOL } from 'os';
-import { server, port } from '../server';
+import server from '../server';
+
+const { PORT } = process.env;
 
 (() => {
   if (cluster.isPrimary) {
@@ -12,6 +14,6 @@ import { server, port } from '../server';
       if (pid) process.stdout.write(`Worker with id ${pid} has been forked${EOL}`);
     });
   } else {
-    server.listen(port);
+    server.listen(PORT);
   }
 })();

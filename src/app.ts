@@ -1,3 +1,4 @@
-import { server, port } from './server';
+import server from './server';
 
-server.listen(port);
+const { PORT } = process.env;
+server.listen(PORT);

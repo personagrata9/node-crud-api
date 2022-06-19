@@ -7,7 +7,7 @@ import {
   USER_NOT_FOUND_MESSAGE,
 } from '../consts/errorsMessages';
 import { IUser, UUIDType } from '../resources/users/IUser';
-import { server } from '../server';
+import server from '../server';
 
 describe('Scenario 3', () => {
   test('Should return invalid route message', async () => {

@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { IUser, UUIDType } from '../resources/users/IUser';
-import { server } from '../server';
+import server from '../server';
 import uuidValidateV4 from '../utils/uuidValidateV4';
 
 describe('Scenario 2', () => {
