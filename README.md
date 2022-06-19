@@ -1,12 +1,25 @@
 # Simple CRUP API
 
-** Technologies stack:**
-Node js (v16.15.1), nodemon, dotenv, cross-env, typescript, ts-node, eslint, prettier, uuid, jest, supertest
+**Technologies stack:**
+
+- Node js (v16.15.1)
+- nodemon
+- dotenv
+- cross-env
+- typescript
+- ts-node
+- eslint
+- prettier
+- uuid
+- jest
+- supertest
 
 ## How to start
 
 Follow the steps below to install and run the application:
+
 Step 1. Clone this repo.
+
 Step 2. Install all modules listed as dependencies in package:
 
 ```bash
@@ -49,20 +62,20 @@ Congrats! Now you can use running API! One of the options is to take Postman as 
 - **GET** `api/users` is used to get all users - Server will answer with `status code` **200** and all users records
 - **GET** `api/users/${userId}`
   - Server will answer with `status code` **200** and a record with `id === userId` if it exists
-  - Server will answer with `status code` **400** and message **Invalid User ID (not uuid)**
+  - Server will answer with `status code` **400** and message **'Invalid User ID (not uuid)'**
     if `userId` is invalid (not `uuid`)
-  - Server will answer with `status code` **404** and message **User not found** if record with `id === userId` doesn't exist
+  - Server will answer with `status code` **404** and message **'User not found'** if record with `id === userId` doesn't exist
 - **POST** `api/users` is used to create record about new user and store it in database
   - Server will answer with `status code` **201** and newly created record
-  - Server will answer with `status code` **400** and message **Invalid data in request** if request `body` does not contain **required** fields
+  - Server will answer with `status code` **400** and message **'Invalid data in request'** if request `body` does not contain **required** fields
 - **PUT** `api/users/${userId}` is used to update existing user
   - Server will answer with` status code` **200** and updated record
-  - Server will answer with` status code` **400** and message **Invalid User ID (not uuid)** if `userId` is invalid (not `uuid`)
-  - Server will answer with` status code` **404** and message **User not found** if record with `id === userId` doesn't exist
+  - Server will answer with` status code` **400** and message **'Invalid User ID (not uuid')** if `userId` is invalid (not `uuid`)
+  - Server will answer with` status code` **404** and message **'User not found'** if record with `id === userId` doesn't exist
 - **DELETE** `api/users/${userId}` is used to delete existing user from database
   - Server will answer with `status code` **204** if the record is found and deleted
-  - Server will answer with `status code` **400** and message **Invalid User ID (not uuid)** if `userId` is invalid (not `uuid`)
-  - Server will answer with `status code` **404** and message **User not found** if record with `id === userId` doesn't exist
+  - Server will answer with `status code` **400** and message **'Invalid User ID (not uuid)'** if `userId` is invalid (not `uuid`)
+  - Server will answer with `status code` **404** and message **'User not found'** if record with `id === userId` doesn't exist
 
 2. Users are stored as `objects` that have following properties:
 
