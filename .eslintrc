@@ -35,5 +35,5 @@
     "@typescript-eslint/no-explicit-any": 2,
     "prettier/prettier": "error"
   },
-  "ignorePatterns": ["jest.config.ts"]
+  "ignorePatterns": ["jest.config.ts", "src/test"]
 }
