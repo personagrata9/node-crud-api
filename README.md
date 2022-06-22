@@ -26,7 +26,9 @@ Step 2. Install all modules listed as dependencies in package:
 npm install
 ```
 
-Step 3. Run the application using one of three options:
+Step 3. Add `.env` file to the root directory of the project and set `PORT=port_number` to run on the desired port.
+
+Step 4. Run the application using one of three options:
 
 1. development mode:
 
@@ -46,14 +48,11 @@ npm run start:prod
 npm run start:multi
 ```
 
-You can set the port for the application to run using environment variable PORT. In other case it will run on a default port 4000.
-Script example of setting custom port:
+Congrats! Now you can use running API! One of the options is to take Postman as a platform for using APIs (https://www.postman.com). Headers to be set in Postman:
 
-```bash
-PORT=8000 npm run start:dev
-```
-
-Congrats! Now you can use running API! One of the options is to take Postman as a platform for using APIs (https://www.postman.com).
+- Content-Type: application/json
+- Connection: keep-alive
+- Content-Length: \<calculated when request is sent\>
 
 ## Implementation details
 
