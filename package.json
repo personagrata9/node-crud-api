@@ -1,0 +1,52 @@
+{
+  "name": "crud-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.ts",
+  "scripts": {
+    "start:dev": "cross-env nodemon",
+    "start:prod": "cross-env tsc && ts-node dist/app.js",
+    "start:multi": "cross-env ts-node src/multi/multi.ts",
+    "test": "jest",
+    "lint": "eslint ./src",
+    "lint:fix": "eslint ./src --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/personagrata9/node-crud-api.git"
+  },
+  "author": "personagrata9",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/personagrata9/node-crud-api/issues"
+  },
+  "homepage": "https://github.com/personagrata9/node-crud-api#readme",
+  "devDependencies": {
+    "@types/jest": "^28.1.2",
+    "@types/node": "^17.0.44",
+    "@types/supertest": "^2.0.12",
+    "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.28.0",
+    "@typescript-eslint/parser": "^5.28.0",
+    "eslint": "^8.17.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-airbnb-typescript": "^17.0.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-import-resolver-typescript": "^2.7.1",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^28.1.1",
+    "nodemon": "^2.0.16",
+    "prettier": "^2.7.0",
+    "supertest": "^6.2.3",
+    "ts-jest": "^28.0.5",
+    "ts-loader": "^9.3.0",
+    "typescript": "^4.7.3"
+  },
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.0.1",
+    "ts-node": "^10.8.1",
+    "uuid": "^8.3.2"
+  }
+}
